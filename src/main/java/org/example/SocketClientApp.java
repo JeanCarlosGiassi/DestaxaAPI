@@ -28,6 +28,7 @@ public class SocketClientApp extends JFrame {
     private JButton connectButton;
     private JButton disconnectButton;
     private JButton sendButton;
+    private JButton clearButton;
     private JTextArea sendArea;
     private JTextArea receiveArea;
 
@@ -45,9 +46,10 @@ public class SocketClientApp extends JFrame {
         // Painel Superior - Conexão
         JPanel connectionPanel = new JPanel(new FlowLayout());
         ipField = new JTextField("127.0.0.1", 10);
-        portField = new JTextField("12345", 5);
+        portField = new JTextField("60906", 5);
         connectButton = new JButton("Conectar");
         disconnectButton = new JButton("Desconectar");
+        clearButton = new JButton("Limpar Log");
 
         connectionPanel.add(new JLabel("IP:"));
         connectionPanel.add(ipField);
@@ -55,6 +57,7 @@ public class SocketClientApp extends JFrame {
         connectionPanel.add(portField);
         connectionPanel.add(connectButton);
         connectionPanel.add(disconnectButton);
+        connectionPanel.add(clearButton);
 
         // Áreas de Envio e Recebimento
         sendArea = new JTextArea(5, 40);
@@ -85,6 +88,7 @@ public class SocketClientApp extends JFrame {
         connectButton.addActionListener(e -> connect());
         disconnectButton.addActionListener(e -> disconnect());
         sendButton.addActionListener(e -> sendMessage());
+        clearButton.addActionListener(e -> clearLog());
 
         // Habilitar botão "Enviar" somente quando tiver texto
         sendArea.getDocument().addDocumentListener(new DocumentListener() {
@@ -137,6 +141,11 @@ public class SocketClientApp extends JFrame {
 
         updateUIState(false);
         JOptionPane.showMessageDialog(this, "Desconectado com sucesso.");
+    }
+
+    private void clearLog() {
+       if (sendArea != null) sendArea.setText("");
+       if (receiveArea != null) receiveArea.setText("");
     }
 
     private void sendMessage() {
